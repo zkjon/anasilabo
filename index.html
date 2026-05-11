@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Separador de Sílabas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .contenedor-silabas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            min-height: 50px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            border: 2px dashed #999;
+            margin-bottom: 20px;
+        }
+
+        .silaba {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: grab;
+            user-select: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .silaba:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .silaba.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .palabra-resultado {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ordenador de Sílabas</h1>
+    <input type="text" id="origen" placeholder="Escribe una palabra...">
+
+    <h3>Arrastra las sílabas para ordenarlas:</h3>
+    <div class="contenedor-silabas" id="contenedor-silabas"></div>
+
+    <div class="palabra-resultado" id="palabra-resultado"></div>
+
+    <script>
+        const origen = document.getElementById("origen");
+        const contenedorSilabas = document.getElementById("contenedor-silabas");
+        const palabraResultado = document.getElementById("palabra-resultado");
+
+        const vocales = 'aeiouáéíóu';
+        let draggedElement = null;
+
+        function separarSilabas(palabra) {
+            const consonantesValidas = ['pr', 'br', 'tr', 'dr', 'cr', 'gr', 'fr', 'bl', 'cl', 'fl', 'gl'];
+
+            // Encontrar posiciones de vocales
+            const posVocales = [];
+            for (let i = 0; i < palabra.length; i++) {
+                if (vocales.includes(palabra[i].toLowerCase())) {
+                    posVocales.push(i);
+                }
+            }
+
+            if (posVocales.length <= 1) {
+                return [palabra];
+            }
+
+            // Encontrar puntos de división
+            const divisiones = [0];
+
+            for (let i = 0; i < posVocales.length - 1; i++) {
+                const inicioVocal = posVocales[i];
+                const proxVocal = posVocales[i + 1];
+                const numConsonantes = proxVocal - inicioVocal - 1;
+
+                if (numConsonantes === 1) {
+                    divisiones.push(inicioVocal + 1);
+                } else if (numConsonantes > 1) {
+                    const grupoConsonantes = palabra.substring(inicioVocal + 1, proxVocal);
+                    const primerasDos = grupoConsonantes.substring(0, 2).toLowerCase();
+
+                    if (consonantesValidas.includes(primerasDos)) {
+                        divisiones.push(inicioVocal + 1);
+                    } else {
+                        divisiones.push(inicioVocal + 2);
+                    }
+                }
+            }
+
+            divisiones.push(palabra.length);
+
+            // Construir sílabas
+            const silabas = [];
+            for (let i = 0; i < divisiones.length - 1; i++) {
+                silabas.push(palabra.substring(divisiones[i], divisiones[i + 1]));
+            }
+
+            return silabas;
+        }
+
+        function crearBloques(silabas) {
+            contenedorSilabas.innerHTML = '';
+
+            silabas.forEach((silaba, index) => {
+                const bloque = document.createElement('div');
+                bloque.className = 'silaba';
+                bloque.textContent = silaba;
+                bloque.draggable = true;
+                bloque.dataset.index = index;
+
+                bloque.addEventListener('dragstart', (e) => {
+                    draggedElement = bloque;
+                    bloque.classList.add('dragging');
+                });
+
+                bloque.addEventListener('dragend', (e) => {
+                    bloque.classList.remove('dragging');
+                    draggedElement = null;
+                });
+
+                bloque.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    if (draggedElement && draggedElement !== bloque) {
+                        const rect = bloque.getBoundingClientRect();
+                        const midpoint = rect.left + rect.width / 2;
+                        if (e.clientX < midpoint) {
+                            bloque.parentNode.insertBefore(draggedElement, bloque);
+                        } else {
+                            bloque.parentNode.insertBefore(draggedElement, bloque.nextSibling);
+                        }
+                    }
+                });
+
+                contenedorSilabas.appendChild(bloque);
+            });
+
+            actualizarResultado();
+        }
+
+        function actualizarResultado() {
+            const bloques = document.querySelectorAll('.silaba');
+            let palabraFinal = '';
+            bloques.forEach(bloque => {
+                palabraFinal += bloque.textContent;
+            });
+            palabraResultado.textContent = palabraFinal || 'Escribe una palabra...';
+        }
+
+        // Actualizar cuando el contenedor cambia
+        const observer = new MutationObserver(actualizarResultado);
+        observer.observe(contenedorSilabas, { childList: true });
+
+        origen.addEventListener('input', (e) => {
+            const palabra = e.target.value.toLowerCase().trim();
+            if (palabra) {
+                const silabas = separarSilabas(palabra);
+                crearBloques(silabas);
+            } else {
+                contenedorSilabas.innerHTML = '';
+                palabraResultado.textContent = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
