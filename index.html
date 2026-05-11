@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Separador de Sílabas</title>
+    <meta name="description"
+        content="Separador de sílabas en español online. Divide palabras en sílabas, reorganízalas con arrastrar y soltar, y obtén el resultado al instante.">
+    <meta name="keywords"
+        content="separador de sílabas, anasílabo, separar palabras en sílabas, sílabas en español, ordenador de sílabas, dividir palabras, drag and drop, herramienta educativa, análisis silábico">
+    <meta name="author" content="Separador de Sílabas">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="color-scheme" content="light">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:title" content="Separador de Sílabas | Ordenador de sílabas en español">
+    <meta property="og:description"
+        content="Divide palabras en sílabas, arrástralas para ordenarlas y visualiza el resultado al instante con esta herramienta educativa en español.">
+    <meta property="og:site_name" content="Separador de Sílabas">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Separador de Sílabas | Ordenador de sílabas en español">
+    <meta name="twitter:description"
+        content="Herramienta en español para separar palabras en sílabas y reorganizarlas de forma visual.">
+    <title>Separador de Sílabas | Ordenador de sílabas en español</title>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Separador de Sílabas",
+            "description": "Herramienta online en español para separar palabras en sílabas y reorganizarlas visualmente.",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web",
+            "inLanguage": "es",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            }
+        }
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,17 +99,70 @@
             background-color: #e8f5e9;
             border-radius: 5px;
         }
+
+        .descripcion-seo {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .seo-extra {
+            margin-top: 28px;
+            padding: 18px;
+            background: #fafafa;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+        }
+
+        .seo-extra h2,
+        .seo-extra h3 {
+            margin-top: 0;
+        }
+
+        .seo-extra p,
+        .seo-extra li {
+            color: #444;
+            line-height: 1.6;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Ordenador de Sílabas</h1>
+    <header>
+        <h1>ordenador de sílabas</h1>
+        <p class="descripcion-seo">separa palabras en sílabas en español de forma rápida, visual y sencilla. escribe una
+            palabra, revisa sus sílabas y arrástralas para reorganizar la palabra final al instante.</p>
+    </header>
+
     <input type="text" id="origen" placeholder="Escribe una palabra...">
 
-    <h3>Arrastra las sílabas para ordenarlas:</h3>
+    <h2>arrastra las sílabas para ordenarlas</h2>
     <div class="contenedor-silabas" id="contenedor-silabas"></div>
 
     <div class="palabra-resultado" id="palabra-resultado"></div>
+
+    <section class="seo-extra" aria-labelledby="titulo-seo">
+        <h2 id="titulo-seo">separador de sílabas online en español</h2>
+        <p>esta herramienta está pensada para estudiantes, docentes y cualquier persona que necesite dividir palabras en
+            sílabas de forma práctica. funciona directamente en el navegador, sin instalar nada.</p>
+
+        <h3>qué puedes hacer</h3>
+        <ul>
+            <li>separar palabras en sílabas al instante.</li>
+            <li>reordenar sílabas con arrastrar y soltar.</li>
+            <li>ver el resultado final en tiempo real.</li>
+            <li>usar una interfaz ligera y rápida en cualquier dispositivo.</li>
+        </ul>
+
+        <h3>palabras clave relacionadas</h3>
+        <p>separar palabras en sílabas, sílabas en español, ordenador de sílabas, separación silábica, herramienta
+            educativa, análisis de palabras, drag and drop, editor de sílabas.</p>
+    </section>
+
+    <footer style="margin-top: 28px; text-align: center; color: #666; font-size: 14px;">
+        <p>© 2026 zkjon. todos los derechos reservados.</p>
+    </footer>
 
     <script>
         const origen = document.getElementById("origen");
