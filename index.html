@@ -10,8 +10,8 @@
         content="separador de sílabas, anasílabo, separar palabras en sílabas, sílabas en español, ordenador de sílabas, dividir palabras, drag and drop, herramienta educativa, análisis silábico">
     <meta name="author" content="Separador de Sílabas">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="theme-color" content="#4CAF50">
-    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#1e1e1e">
+    <meta name="color-scheme" content="dark">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:title" content="Separador de Sílabas | Ordenador de sílabas en español">
@@ -40,11 +40,33 @@
         }
     </script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-top: 30px;
+            margin-bottom: 15px;
         }
 
         input {
@@ -52,23 +74,33 @@
             padding: 10px;
             margin-bottom: 20px;
             font-size: 16px;
-            border: 2px solid #ccc;
+            border: 2px solid #444;
             border-radius: 5px;
+            background-color: #2e2e2e;
+            color: #e0e0e0;
         }
 
-        .contenedor-silabas {
+        input::placeholder {
+            color: #999;
+        }
+
+        .separador-grupo {
+            margin-bottom: 40px;
+        }
+
+        .contenedor-silabas, .contenedor-letras {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             min-height: 50px;
             padding: 10px;
-            background-color: #f0f0f0;
+            background-color: #2e2e2e;
             border-radius: 5px;
-            border: 2px dashed #999;
+            border: 2px dashed #666;
             margin-bottom: 20px;
         }
 
-        .silaba {
+        .silaba, .letra {
             background-color: #4CAF50;
             color: white;
             padding: 10px 15px;
@@ -80,67 +112,94 @@
             transition: all 0.2s;
         }
 
-        .silaba:hover {
-            background-color: #45a049;
+        .letra {
+            background-color: #2196F3;
+        }
+
+        .silaba:hover, .letra:hover {
             transform: scale(1.05);
         }
 
-        .silaba.dragging {
+        .silaba:hover {
+            background-color: #45a049;
+        }
+
+        .letra:hover {
+            background-color: #1976D2;
+        }
+
+        .silaba.dragging, .letra.dragging {
             opacity: 0.5;
             cursor: grabbing;
         }
 
-        .palabra-resultado {
+        .palabra-resultado, .palabra-resultado-letras {
             font-size: 24px;
             font-weight: bold;
             text-align: center;
-            color: #333;
-            padding: 10px;
-            background-color: #e8f5e9;
+            color: #4CAF50;
+            padding: 15px;
+            background-color: #2e2e2e;
             border-radius: 5px;
         }
 
         .descripcion-seo {
             font-size: 16px;
             line-height: 1.6;
-            color: #444;
+            color: #b0b0b0;
             margin-bottom: 20px;
         }
 
         .seo-extra {
             margin-top: 28px;
             padding: 18px;
-            background: #fafafa;
-            border: 1px solid #e5e5e5;
+            background: #2e2e2e;
+            border: 1px solid #444;
             border-radius: 8px;
         }
 
         .seo-extra h2,
         .seo-extra h3 {
             margin-top: 0;
+            color: #4CAF50;
         }
 
         .seo-extra p,
         .seo-extra li {
-            color: #444;
+            color: #b0b0b0;
             line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 28px;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>ordenador de sílabas</h1>
-        <p class="descripcion-seo">separa palabras en sílabas en español de forma rápida, visual y sencilla. escribe una
-            palabra, revisa sus sílabas y arrástralas para reorganizar la palabra final al instante.</p>
+        <h1>Separador de Palabras</h1>
+        <p class="descripcion-seo">Separa palabras en sílabas o por letras en español de forma rápida, visual y sencilla. Escribe una palabra, revisa cómo se divide y arrástralas para reorganizar.</p>
     </header>
 
     <input type="text" id="origen" placeholder="Escribe una palabra...">
 
-    <h2>arrastra las sílabas para ordenarlas</h2>
-    <div class="contenedor-silabas" id="contenedor-silabas"></div>
+    <div class="separador-grupo">
+        <h2>Arrastra las sílabas para ordenarlas</h2>
+        <div class="contenedor-silabas" id="contenedor-silabas"></div>
+        <div class="palabra-resultado" id="palabra-resultado"></div>
+    </div>
 
-    <div class="palabra-resultado" id="palabra-resultado"></div>
+    <div class="separador-grupo">
+        <h2>Arrastra las letras para ordenarlas</h2>
+        <div class="contenedor-letras" id="contenedor-letras"></div>
+        <div class="palabra-resultado palabra-resultado-letras" id="palabra-resultado-letras"></div>
+    </div>
 
     <section class="seo-extra" aria-labelledby="titulo-seo">
         <h2 id="titulo-seo">separador de sílabas online en español</h2>
@@ -160,7 +219,7 @@
             educativa, análisis de palabras, drag and drop, editor de sílabas.</p>
     </section>
 
-    <footer style="margin-top: 28px; text-align: center; color: #666; font-size: 14px;">
+    <footer>
         <p>© 2026 zkjon. todos los derechos reservados.</p>
     </footer>
 
@@ -168,6 +227,8 @@
         const origen = document.getElementById("origen");
         const contenedorSilabas = document.getElementById("contenedor-silabas");
         const palabraResultado = document.getElementById("palabra-resultado");
+        const contenedorLetras = document.getElementById("contenedor-letras");
+        const palabraResultadoLetras = document.getElementById("palabra-resultado-letras");
 
         const vocales = 'aeiouáéíóu';
         let draggedElement = null;
@@ -220,13 +281,17 @@
             return silabas;
         }
 
-        function crearBloques(silabas) {
-            contenedorSilabas.innerHTML = '';
+        function separarLetras(palabra) {
+            return palabra.split('');
+        }
 
-            silabas.forEach((silaba, index) => {
+        function crearBloques(elementos, contenedor, clase, resultadoElemento) {
+            contenedor.innerHTML = '';
+
+            elementos.forEach((elemento, index) => {
                 const bloque = document.createElement('div');
-                bloque.className = 'silaba';
-                bloque.textContent = silaba;
+                bloque.className = clase;
+                bloque.textContent = elemento;
                 bloque.draggable = true;
                 bloque.dataset.index = index;
 
@@ -253,33 +318,46 @@
                     }
                 });
 
-                contenedorSilabas.appendChild(bloque);
+                bloque.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    actualizarResultado(contenedor, resultadoElemento);
+                });
+
+                contenedor.appendChild(bloque);
             });
 
-            actualizarResultado();
+            actualizarResultado(contenedor, resultadoElemento);
         }
 
-        function actualizarResultado() {
-            const bloques = document.querySelectorAll('.silaba');
+        function actualizarResultado(contenedor, resultadoElemento) {
+            const bloques = contenedor.querySelectorAll('[class*="silaba"], [class*="letra"]');
             let palabraFinal = '';
             bloques.forEach(bloque => {
                 palabraFinal += bloque.textContent;
             });
-            palabraResultado.textContent = palabraFinal || 'Escribe una palabra...';
+            resultadoElemento.textContent = palabraFinal || 'Escribe una palabra...';
         }
 
-        // Actualizar cuando el contenedor cambia
-        const observer = new MutationObserver(actualizarResultado);
-        observer.observe(contenedorSilabas, { childList: true });
+        // Actualizar cuando los contenedores cambian
+        const observerSilabas = new MutationObserver(() => actualizarResultado(contenedorSilabas, palabraResultado));
+        observerSilabas.observe(contenedorSilabas, { childList: true });
+
+        const observerLetras = new MutationObserver(() => actualizarResultado(contenedorLetras, palabraResultadoLetras));
+        observerLetras.observe(contenedorLetras, { childList: true });
 
         origen.addEventListener('input', (e) => {
             const palabra = e.target.value.toLowerCase().trim();
             if (palabra) {
                 const silabas = separarSilabas(palabra);
-                crearBloques(silabas);
+                crearBloques(silabas, contenedorSilabas, 'silaba', palabraResultado);
+                
+                const letras = separarLetras(palabra);
+                crearBloques(letras, contenedorLetras, 'letra', palabraResultadoLetras);
             } else {
                 contenedorSilabas.innerHTML = '';
                 palabraResultado.textContent = '';
+                contenedorLetras.innerHTML = '';
+                palabraResultadoLetras.textContent = '';
             }
         });
     </script>
