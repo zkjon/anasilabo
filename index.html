@@ -88,7 +88,8 @@
             margin-bottom: 40px;
         }
 
-        .contenedor-silabas, .contenedor-letras {
+        .contenedor-silabas,
+        .contenedor-letras {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
@@ -100,7 +101,8 @@
             margin-bottom: 20px;
         }
 
-        .silaba, .letra {
+        .silaba,
+        .letra {
             background-color: #4CAF50;
             color: white;
             padding: 10px 15px;
@@ -116,7 +118,8 @@
             background-color: #2196F3;
         }
 
-        .silaba:hover, .letra:hover {
+        .silaba:hover,
+        .letra:hover {
             transform: scale(1.05);
         }
 
@@ -128,12 +131,14 @@
             background-color: #1976D2;
         }
 
-        .silaba.dragging, .letra.dragging {
+        .silaba.dragging,
+        .letra.dragging {
             opacity: 0.5;
             cursor: grabbing;
         }
 
-        .palabra-resultado, .palabra-resultado-letras {
+        .palabra-resultado,
+        .palabra-resultado-letras {
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -184,7 +189,8 @@
 <body>
     <header>
         <h1>Separador de Palabras</h1>
-        <p class="descripcion-seo">Separa palabras en sílabas o por letras en español de forma rápida, visual y sencilla. Escribe una palabra, revisa cómo se divide y arrástralas para reorganizar.</p>
+        <p class="descripcion-seo">Separa palabras en sílabas o por letras en español de forma rápida, visual y
+            sencilla. Escribe una palabra, revisa cómo se divide y arrástralas para reorganizar.</p>
     </header>
 
     <input type="text" id="origen" placeholder="Escribe una palabra...">
@@ -350,7 +356,7 @@
             if (palabra) {
                 const silabas = separarSilabas(palabra);
                 crearBloques(silabas, contenedorSilabas, 'silaba', palabraResultado);
-                
+
                 const letras = separarLetras(palabra);
                 crearBloques(letras, contenedorLetras, 'letra', palabraResultadoLetras);
             } else {
